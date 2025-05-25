@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atomberg.May.Project.controller.pojo.LoginApiData;
 import com.atomberg.May.Project.controller.pojo.SignupApiData;
 import com.atomberg.May.Project.controller.service.AuthService;
 import com.atomberg.May.Project.entity.User;
@@ -34,6 +35,17 @@ public class AuthController {
 		responseMap.put("User Data", savedUser);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
+	}
+	
+	@PostMapping("/user-login")
+	public ResponseEntity<?> userLogin(@Valid @RequestBody LoginApiData loginApiData) throws Exception{
+		User userDetails = authService.userLogin(loginApiData);
+		
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("Result", "success");
+		responseMap.put("User Data", userDetails);
+		return ResponseEntity.status(HttpStatus.OK).body(responseMap);
+		
 	}
 		
 }

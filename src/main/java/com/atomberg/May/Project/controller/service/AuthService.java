@@ -1,5 +1,6 @@
 package com.atomberg.May.Project.controller.service;
 
+import java.security.PublicKey;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.atomberg.May.Project.controller.pojo.LoginApiData;
 import com.atomberg.May.Project.controller.pojo.SignupApiData;
 import com.atomberg.May.Project.entity.User;
 import com.atomberg.May.Project.repository.UserRepository;
@@ -41,6 +43,24 @@ public class AuthService {
 			User savedUser = userRepository.save(newUser);
 			return savedUser;
 		}
+		
+	
+	}
+	
+	public User userLogin(LoginApiData loginApiData) throws Exception {
+		Optional<User> userCheck = userRepository.findByEmail(loginApiData.getEmail());
+		
+		if(userCheck.isEmpty()==true) {
+			throw new Exception("User account not found with "+loginApiData.getEmail()+". Please sign up!");
+		}else {
+			User user = userCheck.get();
+			if(passwordEncoder.matches(loginApiData.getPassword(), user.getPassword())==true) {
+				return user;
+			}else {
+				throw new Exception("Invalid email or password");
+			}
+		}
+		
 	}
 
 }
