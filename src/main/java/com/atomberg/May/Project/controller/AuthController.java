@@ -31,7 +31,7 @@ public class AuthController {
 		User savedUser = authService.signupService(signupApiData);
 		Map<String, Object> responseMap = new HashMap<String, Object>();
 		responseMap.put("Result", "Success");
-		responseMap.put("Message", "User account added");
+		responseMap.put("Message", "User account added.");
 		responseMap.put("User Data", savedUser);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
