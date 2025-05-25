@@ -42,7 +42,7 @@ public class AuthController {
 		User userDetails = authService.userLogin(loginApiData);
 		
 		Map<String, Object> responseMap = new HashMap<String, Object>();
-		responseMap.put("Result", "success");
+		responseMap.put("Result", "successs");
 		responseMap.put("User Data", userDetails);
 		return ResponseEntity.status(HttpStatus.OK).body(responseMap);
 		
