@@ -1,6 +1,8 @@
 package com.atomberg.May.Project.controller.service;
 
 import java.security.PublicKey;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class AuthService {
 	@Autowired
 	public UserRepository userRepository;
 	
+	@Autowired
+	public EmailService emailService;
+	
 	
 	public PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -28,6 +33,8 @@ public class AuthService {
 		if(checkData.isPresent()==true) {
 			throw new Exception("Email already registered with us, Please login");
 		}else {
+			
+			Map<String, Object> responseMap = new HashMap<String, Object>();
 			User newUser = new User();
 			newUser.setFirstName(signupApiData.getFirstName());
 			newUser.setLastName(signupApiData.getLastName());
@@ -41,7 +48,15 @@ public class AuthService {
 			newUser.setEmail(signupApiData.getEmail());
 			
 			User savedUser = userRepository.save(newUser);
-			return savedUser;
+			String mailBody = "Hello "+savedUser.getFirstName()+" "+savedUser.getLastName()+
+					"Welcome to Atomberg Technologies!"+
+					"Your have successfully signed up with us. Please login using the login page."+
+					"Many Thans"+
+					"Team"+
+					"Atomberg technologies";
+		 	emailService.sendEmailAfterSignup("santhoshk8680@gmail.com",savedUser.getEmail(),"Account created in Atomberg!",mailBody);
+		 	
+		 	return savedUser;
 		}
 		
 	

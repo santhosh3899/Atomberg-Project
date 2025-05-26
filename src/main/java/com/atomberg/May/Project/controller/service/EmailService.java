@@ -1,6 +1,6 @@
 package com.atomberg.May.Project.controller.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;import org.springframework.core.type.filter.AbstractClassTestingTypeFilter;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -53,6 +53,16 @@ public class EmailService {
 		helper.setText(mailBody,true);
 		javaMailSender.send(message);
 		
+	}
+	
+	public void sendEmailAfterSignup(String fromEmail, String toEmail, String subject, String mailBody ) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom(fromEmail);
+		message.setTo(toEmail);
+		message.setSubject(subject);
+		message.setText(mailBody);
+		
+		javaMailSender.send(message);
 	}
 
 }
