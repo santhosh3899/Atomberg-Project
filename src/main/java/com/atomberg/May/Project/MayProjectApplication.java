@@ -8,7 +8,7 @@ public class MayProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MayProjectApplication.class, args);
-		System.out.println("This is May Project...");
+		System.out.println("This is May Atomberg Project...");
 	}
 
 }
